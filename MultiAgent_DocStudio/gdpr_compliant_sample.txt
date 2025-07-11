@@ -1,0 +1,36 @@
+Employee Data Privacy Notice
+
+This document describes how Acme Corp handles employee personal data in full compliance with the General Data Protection Regulation (GDPR).
+
+1. Purpose of Data Collection:
+   We collect your personal data (e.g., contact details, bank info, tax ID) to manage payroll, benefits, and meet legal obligations. Processing is based on your employment contract and legal requirements. Data may be shared with service providers and authorities, and retained for up to six years after employment ends. You have rights over your data and can contact our Data Protection Officer at dpo@company.com. If data is transferred outside the EEA, we use approved safeguards.
+
+2. Data Minimization:
+   Only data strictly necessary for employment purposes is collected and processed.
+
+3. Lawful Basis:
+   All data processing is based on a lawful basis, such as contract performance, legal obligation, or explicit employee consent.
+
+4. Consent Mechanisms:
+   Where required, explicit and informed consent is always obtained from employees before processing their personal data. Employees can withdraw consent at any time, and the process for doing so is simple and clearly communicated.
+
+5. Transparency:
+   Employees are informed about what data is collected, how it is used, and their rights via this notice and our internal privacy policy.
+
+6. Data Security:
+   Personal data is stored securely and access is restricted to authorized personnel only.
+
+7. Data Subject Rights:
+   All data subject rights under GDPR—including access, rectification, erasure, restriction, objection, and data portability—are fully honored and supported. Employees can exercise these rights at any time by contacting HR or the Data Protection Officer.
+
+8. Data Retention:
+  Personal data is retained only for as long as necessary to fulfill employment-related or legal obligations, in line with GDPR requirements. Specific retention periods are defined based on the type of data and purpose of processing, and data is securely deleted or anonymized when no longer required.s
+
+9. International Data Transfers:
+   Employee data is not transferred outside the European Economic Area (EEA). If international transfers are ever required, they will only occur with full legal authorization and appropriate safeguards in place.
+
+10. No Data Sharing Without Consent:
+    Employee data is not shared with third parties without explicit consent, except where required by law.
+
+11. Contact:
+    For any questions or to exercise your rights, contact our Data Protection Officer at dpo@acmecorp.com. 

@@ -1,0 +1,47 @@
+PATIENT MEDICAL RECORD - DEMO HOSPITAL
+
+Patient Name: John Smith
+Date of Birth: 03/15/1985
+Social Security Number: 123-45-6789
+Address: 123 Main Street, Anytown, USA
+Phone: (555) 123-4567
+Email: john.smith@email.com
+
+MEDICAL HISTORY:
+Patient has a history of diabetes, hypertension, and depression. Previous treatments include insulin therapy and antidepressants. Patient has been hospitalized twice for mental health issues.
+
+CURRENT DIAGNOSIS:
+- Type 2 Diabetes (uncontrolled)
+- Major Depressive Disorder
+- Hypertension
+- Alcohol dependency
+
+TREATMENT PLAN:
+- Metformin 500mg twice daily
+- Sertraline 100mg daily for depression
+- Lisinopril 10mg daily for blood pressure
+- Referral to alcohol rehabilitation program
+
+NOTES:
+Patient expressed suicidal thoughts during last visit. Family members should be notified immediately. Patient's employer has been contacted regarding extended medical leave. Patient's financial situation is poor - may need assistance with medication costs.
+
+This information has been shared with:
+- Patient's employer (HR department)
+- Insurance company
+- Social media platforms for fundraising
+- Local newspaper for community awareness
+- Patient's neighbors and friends
+- Online medical forums for advice
+
+The patient's medical information is stored in unencrypted files and shared via email without password protection. Physical records are kept in unlocked filing cabinets accessible to all staff members.
+
+FOLLOW-UP:
+Next appointment scheduled for 2 weeks. Patient's complete medical record including this information will be posted on our public website for easy access.
+
+This document violates multiple HIPAA requirements including:
+- Unauthorized disclosure of PHI
+- Lack of minimum necessary standard
+- Missing safeguards for PHI
+- Improper sharing with non-authorized parties
+- Inadequate security measures
+- Failure to obtain patient authorization 
