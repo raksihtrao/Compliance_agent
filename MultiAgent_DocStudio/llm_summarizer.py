@@ -6,11 +6,11 @@ class LLMSummarizer:
     def __init__(self, openai_api_key: Optional[str] = None, model: str = "gpt-3.5-turbo"):
         self.api_key = openai_api_key or os.getenv("OPENAI_API_KEY")
         self.model = model
-        openai.api_key = self.api_key
+        self.client = openai.OpenAI(api_key=self.api_key)
 
     def set_api_key(self, api_key: str):
         self.api_key = api_key
-        openai.api_key = api_key
+        self.client = openai.OpenAI(api_key=api_key)
 
     def summarize(self, text: str, model: Optional[str] = None, length: str = "Medium (200-400 words)") -> Optional[str]:
         if not text or len(text.strip()) == 0:
@@ -23,13 +23,13 @@ class LLMSummarizer:
         min_words, max_words = word_limits.get(length, (200, 400))
         prompt = self._create_summary_prompt(text, min_words, max_words)
         try:
-            response = openai.ChatCompletion.create(
+            response = self.client.chat.completions.create(
                 model=model or self.model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=1024,
                 temperature=0.5
             )
-            summary = response.choices[0].message["content"].strip()
+            summary = response.choices[0].message.content.strip()
             if not summary:
                 raise Exception("No summary returned ")
             return summary
@@ -45,13 +45,13 @@ class LLMSummarizer:
             f"Text to analyze:\n{text[:8000]}\n\nKey takeaways (one per line):"
         )
         try:
-            response = openai.ChatCompletion.create(
+            response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=512,
                 temperature=0.5
             )
-            takeaways_text = response.choices[0].message["content"].strip()
+            takeaways_text = response.choices[0].message.content.strip()
             lines = [line.lstrip('-•0123456789. ').strip() for line in takeaways_text.splitlines() if line.strip()]
             return lines[:5]
         except Exception as e:
@@ -80,7 +80,7 @@ Please provide the summary:
     def test_connection(self) -> bool:
         try:
             prompt = "Hello!"
-            response = openai.ChatCompletion.create(
+            response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=10
@@ -101,12 +101,12 @@ Please provide the summary:
 
     def generate(self, prompt: str) -> str:
         try:
-            response = openai.ChatCompletion.create(
+            response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=1024,
                 temperature=0.5
             )
-            return response.choices[0].message["content"].strip()
+            return response.choices[0].message.content.strip()
         except Exception as e:
             raise Exception(f"OpenAI error (generate): {str(e)}") 
