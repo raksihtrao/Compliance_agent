@@ -1,0 +1,40 @@
+PRIVACY POLICY – EXAMPLE COMPANY
+
+Last Updated: January 15, 2024
+
+Welcome to Example Company! We are committed to protecting your privacy and handling your personal data in accordance with the General Data Protection Regulation (GDPR).
+
+INFORMATION WE COLLECT:
+We collect only the personal data necessary to provide our services, such as your name, email address, and contact information. We do not collect sensitive data unless strictly required and with your explicit consent.
+
+LAWFUL BASIS FOR PROCESSING:
+We process your personal data only when we have a lawful basis, such as your consent, the performance of a contract, or compliance with a legal obligation.
+
+CONSENT:
+We will always ask for your explicit consent before collecting or processing your personal data for purposes other than providing our core services. You may withdraw your consent at any time.
+
+DATA SUBJECT RIGHTS:
+You have the right to access, rectify, erase, restrict, or object to the processing of your personal data. You may also request data portability. To exercise your rights, please contact us at privacy@example.com.
+
+DATA RETENTION:
+We retain your personal data only as long as necessary to fulfill the purposes for which it was collected or as required by law. After this period, your data will be securely deleted.
+
+DATA SECURITY:
+We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, loss, or misuse.
+
+INTERNATIONAL TRANSFERS:
+If we transfer your personal data outside the European Economic Area, we ensure adequate safeguards are in place, such as Standard Contractual Clauses.
+
+CHILDREN'S DATA:
+We do not knowingly collect personal data from children under 16 without parental consent.
+
+COOKIES AND TRACKING:
+We use only essential cookies necessary for the operation of our website. You can manage your cookie preferences at any time.
+
+CONTACT US:
+If you have any questions about this privacy policy or your data rights, please contact us at privacy@example.com.
+
+CHANGES TO THIS POLICY:
+We may update this privacy policy from time to time. We will notify you of any significant changes and obtain your consent if required.
+
+This privacy policy is designed to comply with the requirements of the GDPR. 
