@@ -6,10 +6,10 @@ import re
 
 class ComplianceAgent:
    
-    def __init__(self, domain: str = "GDPR", rules: Optional[List[Dict]] = None):
+    def __init__(self, domain: str = "GDPR", rules: Optional[List[Dict]] = None, provider: str = "openai", model: str = "gpt-3.5-turbo"):
         self.domain = domain
         self.rules = rules or []
-        self.llm = LLMSummarizer()
+        self.llm = LLMSummarizer(provider=provider, model=model)
         self.storage = StorageManager()
 
     def ingest_and_chunk(self, text: str, chunk_size: int = 1200) -> List[str]:

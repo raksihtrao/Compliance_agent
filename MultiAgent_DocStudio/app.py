@@ -10,9 +10,29 @@ from compliance_agent import ComplianceAgent
 from urllib.parse import parse_qs
 from prompt_db import PromptDB
 from compliance_chatbot import ComplianceChatbot
+from jinja2 import Template
 
 
 load_dotenv()
+
+# Add LLM/model selection to sidebar (top)
+with st.sidebar:
+    st.header("Model Selection 🧠")
+    llm_model = st.selectbox(
+        "Choose LLM Model",
+        ["OpenAI GPT-3.5", "OpenAI GPT-4", "Gemini Pro"],
+        index=0,
+        key="llm_model_select"
+    )
+
+# Map user-friendly names to backend model keys
+MODEL_MAP = {
+    "OpenAI GPT-3.5": ("openai", "gpt-3.5-turbo"),
+    "OpenAI GPT-4": ("openai", "gpt-4"),
+    "Gemini Pro": ("gemini", "gemini-2.5-flash")
+}
+llm_provider, llm_model_key = MODEL_MAP[llm_model]
+
 
 if 'active_agent' not in st.session_state:
     st.session_state['active_agent'] = 'summarizer'
@@ -79,30 +99,66 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-nav_col1, nav_col2 = st.columns([1, 1])
-with nav_col1:
+# Arrange the 5 agent pill buttons in 2 columns
+nav_col_left, nav_col_right = st.columns(2)
+with nav_col_left:
     btn1 = st.button('Summarizer Agent', key='nav_summarizer', use_container_width=True)
     if btn1:
         st.session_state['active_agent'] = 'summarizer'
-with nav_col2:
+    btn3 = st.button('Proposal/Content Generator Agent', key='nav_proposal', use_container_width=True)
+    if btn3:
+        st.session_state['active_agent'] = 'proposal'
+    btn4 = st.button('Banner/Post Generator Agent', key='nav_banner', use_container_width=True)
+    if btn4:
+        st.session_state['active_agent'] = 'banner'
+with nav_col_right:
     btn2 = st.button('Compliance Check Agent', key='nav_compliance', use_container_width=True)
     if btn2:
         st.session_state['active_agent'] = 'compliance'
-
+    btn5 = st.button('Campaign Performance Analyst Agent', key='nav_analyst', use_container_width=True)
+    if btn5:
+        st.session_state['active_agent'] = 'analyst'
 
 active_agent = st.session_state['active_agent']
 st.markdown(f"""
 <script>
 const btns = window.parent.document.querySelectorAll('.stButton > button');
-if (btns.length >= 2) {{
+if (btns.length >= 5) {{
     btns[0].classList.remove('selected','unselected');
     btns[1].classList.remove('selected','unselected');
+    btns[2].classList.remove('selected','unselected');
+    btns[3].classList.remove('selected','unselected');
+    btns[4].classList.remove('selected','unselected');
     if ('{active_agent}' === 'summarizer') {{
         btns[0].classList.add('selected');
         btns[1].classList.add('unselected');
-    }} else {{
+        btns[2].classList.add('unselected');
+        btns[3].classList.add('unselected');
+        btns[4].classList.add('unselected');
+    }} else if ('{active_agent}' === 'compliance') {{
         btns[0].classList.add('unselected');
         btns[1].classList.add('selected');
+        btns[2].classList.add('unselected');
+        btns[3].classList.add('unselected');
+        btns[4].classList.add('unselected');
+    }} else if ('{active_agent}' === 'proposal') {{
+        btns[0].classList.add('unselected');
+        btns[1].classList.add('unselected');
+        btns[2].classList.add('selected');
+        btns[3].classList.add('unselected');
+        btns[4].classList.add('unselected');
+    }} else if ('{active_agent}' === 'banner') {{
+        btns[0].classList.add('unselected');
+        btns[1].classList.add('unselected');
+        btns[2].classList.add('unselected');
+        btns[3].classList.add('selected');
+        btns[4].classList.add('unselected');
+    }} else if ('{active_agent}' === 'analyst') {{
+        btns[0].classList.add('unselected');
+        btns[1].classList.add('unselected');
+        btns[2].classList.add('unselected');
+        btns[3].classList.add('unselected');
+        btns[4].classList.add('selected');
     }}
 }}
 </script>
@@ -113,7 +169,8 @@ st.markdown("<hr style='margin-bottom:2rem;'>", unsafe_allow_html=True)
 if st.session_state['active_agent'] == 'summarizer':
     st.markdown('<div style="padding-bottom:1.5rem;"><h2 style="color:#111;">Summarizer Agent</h2></div>', unsafe_allow_html=True)
     document_processor = DocumentProcessor()
-    llm_summarizer = LLMSummarizer()
+    # Pass provider and model to summarizer
+    llm_summarizer = LLMSummarizer(provider=llm_provider, model=llm_model_key)
     storage_manager = StorageManager()
     with st.sidebar:
         st.header("Summarization Configuration 🛠️")
@@ -272,7 +329,7 @@ if st.session_state['active_agent'] == 'summarizer':
                 except Exception as e:
                     st.error(f"Error processing file: {str(e)}")
                 st.markdown('</div>', unsafe_allow_html=True)
-else:
+elif active_agent == 'compliance':
    
     with st.sidebar:
         st.markdown('<h3>Compliance Chatbot</h3>', unsafe_allow_html=True)
@@ -519,7 +576,8 @@ Language: {language}
         else:
             with st.spinner(f"Running compliance check for {domain}..."):
                 try:
-                    agent = ComplianceAgent(domain=domain)
+                    # Pass provider and model to ComplianceAgent
+                    agent = ComplianceAgent(domain=domain, provider=llm_provider, model=llm_model_key)
                     
                     all_text = ''
                     if compliance_files:
@@ -753,3 +811,84 @@ Language: {language}
                 except Exception as e:
                     st.error(f"Error running compliance check: {str(e)}")
                     st.info("Please check that Ollama is running and the Mistral model is available.") 
+elif active_agent == 'proposal':
+    st.markdown('<div style="padding-bottom:1.5rem;"><h2 style="color:#111;">Proposal/Content Generator Agent</h2></div>', unsafe_allow_html=True)
+    with st.sidebar:
+        st.header("Content Generation Settings 📝")
+        content_type = st.selectbox("Content Type", ["Blog Post", "Email", "Proposal", "LinkedIn Post"], index=0)
+    st.markdown('<div class="text-card">', unsafe_allow_html=True)
+    st.markdown("<h3>Enter Content Details</h3>", unsafe_allow_html=True)
+    campaign_brief = st.text_area("Campaign Brief", key="proposal_campaign_brief")
+    audience = st.text_input("Target Audience", key="proposal_audience")
+    objective = st.text_input("Primary Objective", key="proposal_objective")
+    generate_btn = st.button("Generate Content", key="generate_proposal_btn")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Jinja2 templates for each content type
+    templates = {
+        "Blog Post": Template("""
+Write a compelling blog post for the following marketing campaign.
+
+**Campaign Brief:** {{ campaign_brief }}
+**Target Audience:** {{ audience }}
+**Primary Objective:** {{ objective }}
+
+Tone: Professional yet friendly.
+Length: ~500 words.
+Include a strong call to action at the end.
+"""),
+        "Email": Template("""
+Write a promotional email.
+
+**Product/Campaign:** {{ campaign_brief }}
+**Audience:** {{ audience }}
+**Goal:** {{ objective }}
+
+Include a catchy subject line, a persuasive body, and a strong CTA.
+"""),
+        "Proposal": Template("""
+Draft a professional marketing proposal.
+
+**Campaign Brief:** {{ campaign_brief }}
+**Target Audience:** {{ audience }}
+**Objective:** {{ objective }}
+
+Structure: Executive summary, campaign strategy, deliverables, timeline, and call to action.
+"""),
+        "LinkedIn Post": Template("""
+Write a LinkedIn update for a marketing campaign.
+
+**Campaign Brief:** {{ campaign_brief }}
+**Audience:** {{ audience }}
+**Objective:** {{ objective }}
+
+Tone: Inspiring and concise. Include relevant hashtags.
+""")
+    }
+
+    if generate_btn:
+        if not campaign_brief or not audience or not objective:
+            st.warning("Please fill in all fields to generate content.")
+        else:
+            prompt = templates[content_type].render(
+                campaign_brief=campaign_brief,
+                audience=audience,
+                objective=objective
+            )
+            try:
+                # Use the selected LLM backend
+                llm_summarizer = LLMSummarizer(provider=llm_provider, model=llm_model_key)
+                with st.spinner("Generating content..."):
+                    content = llm_summarizer.generate(prompt)
+                st.success("Content generated!")
+                st.markdown("<h4>Generated Content</h4>", unsafe_allow_html=True)
+                st.text_area("Generated Content", value=content, height=400, key="generated_content_area")
+                st.download_button("Download as TXT", data=content, file_name="generated_content.txt")
+            except Exception as e:
+                st.error(f"Error generating content: {str(e)}") 
+elif active_agent == 'banner':
+    from Banner_Agent import render_banner_agent
+    render_banner_agent(st, llm_provider, llm_model_key) 
+elif active_agent == 'analyst':
+    from Analyst_dashboard import render_analyst_dashboard
+    render_analyst_dashboard(st, llm_provider, llm_model_key) 
